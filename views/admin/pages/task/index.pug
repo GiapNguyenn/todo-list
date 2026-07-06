@@ -1,0 +1,22 @@
+extends ../../layouts/default
+
+block main
+  .d-flex.justify-content-between.align-items-center.mb-4
+    h2.mb-0 Danh sách Task
+
+    a.btn.btn-primary(href="/admin/tasks/create")
+      | Thêm Task
+
+  table.table.table-bordered.table-hover
+    thead.thead-dark
+      tr
+        th #
+        th Tên
+        th Trạng thái
+
+    tbody
+      tr
+        td 1
+        td Làm giao diện
+        td
+          span.badge.badge-success Hoàn thành

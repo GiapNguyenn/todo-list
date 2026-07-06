@@ -1,0 +1,28 @@
+/* css của trang chung admin  */
+body{
+    background:#f8f9fa;
+}
+
+.navbar{
+    height:60px;
+}
+
+aside{
+    min-height:calc(100vh - 60px);
+}
+
+.list-group-item{
+    border:none;
+    border-radius:0;
+}
+
+.list-group-item:hover{
+    background:#007bff;
+    color:#fff;
+}
+
+main{
+    background:#fff;
+}
+
+/*end  css của trang chung admin  */
