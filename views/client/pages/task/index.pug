@@ -1,0 +1,46 @@
+extends ../../layouts/default.pug
+
+block main
+  h2.mb-4.text-center Danh sách công việc
+
+  if tasks.length > 0
+    .row
+      each task in tasks
+        .col-lg-4.col-md-6.mb-4
+          .card.shadow-sm.h-100
+            .card-body
+              h4.card-title= task.title
+
+              p.card-text
+                strong Nội dung:
+                br
+                != task.description
+
+              p.mb-2
+                strong Số nhân viên:
+                |  #{task.quantityMember}
+
+              p.mb-2
+                strong Ngày bắt đầu:
+                |  #{task.startDate.toLocaleDateString("vi-VN")}
+
+              p.mb-2
+                strong Ngày kết thúc:
+                |  #{task.endDate.toLocaleDateString("vi-VN")}
+
+              p.mb-3
+                strong Trạng thái:
+                if task.status == "incomplete"
+                  span  Đang thực hiện
+                else
+                  span.badge Đã hoàn thành
+
+            .card-footer.bg-white.text-center
+              a.btn.btn-primary(
+                href=`/task/join/${task._id}`
+              )
+                | Tham gia công việc
+
+  else
+    .alert.alert-warning.text-center
+      | Hiện chưa có công việc nào.
