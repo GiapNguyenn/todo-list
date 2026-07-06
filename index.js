@@ -16,8 +16,8 @@ const app = express();
   const database = require("./config/database")
   database.connect()
 
-app.set('views', `${__dirname}/views`);
-app.set("views", "./views");
+  app.set('views', `${__dirname}/views`);
+  app.set("views", "./views");
 
   // flash 
     app.use(cookieParser('KeyBatKy'));
