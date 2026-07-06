@@ -17,7 +17,7 @@ const app = express();
   database.connect()
 
   app.set('views', `${__dirname}/views`);
-  app.set("views", "./views");
+  app.set("view engine", "pug");
 
   // flash 
     app.use(cookieParser('KeyBatKy'));
@@ -45,3 +45,5 @@ const app = express();
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
   })
+
+module.exports = app; 
