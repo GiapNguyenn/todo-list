@@ -55,3 +55,48 @@ module.exports.changeStatus = async (req, res) => {
   req.flash('success', 'Cập nhật trạng thái thành công ');
   res.redirect(req.get("Referrer"));
 }
+// [GET] /admin/task/create 
+module.exports.create = async (req, res) => {
+  res.render("./admin/pages/task/create.pug", {
+    pageTitle: "Tạo mới công việc"
+  });
+}
+// [POST] /admin/task/create
+module.exports.createPost = async (req, res) => {
+  try {
+  const data = new Task(req.body);
+  await data.save();
+  req.flash('success', 'Tạo mới công việc thành công');
+  res.redirect("/admin/task");
+  } catch (error) {
+    req.flash('error', 'Tạo mới công việc thất bại');
+    res.redirect("/admin/task/create");
+  }
+
+}
+// [GET] /admin/task/edit/:id 
+module.exports.edit = async (req, res) => {
+  try {
+      const id = req.params.id;
+      const task = await Task.findById(id);
+      res.render("./admin/pages/task/edit.pug", {
+        pageTitle: "Chỉnh sửa công việc",
+        task: task
+      });
+    } catch (error) {
+      req.flash('error', 'Không tìm thấy công việc');
+      res.redirect("/admin/task");
+    }
+}
+// [PATCH] /admin/task/edit/:id
+module.exports.update = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Task.updateOne({ _id: id }, req.body);
+    req.flash('success', 'Cập nhật công việc thành công');
+    res.redirect("/admin/task");
+  } catch (error) {
+    req.flash('error', 'Cập nhật công việc thất bại');
+    res.redirect(`/admin/task/edit/${req.params.id}`);
+  }
+}

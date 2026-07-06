@@ -1,0 +1,81 @@
+extends ../../layouts/default.pug
+
+block main
+  h2.mb-4 Thêm công việc
+
+  .card
+    .card-header.bg-primary.text-white
+      | Thông tin công việc
+
+    .card-body
+      form(
+        action=`${prefixAdmin}/task/create`
+        method="POST"
+      )
+
+        .form-group
+          label(for="title") Tên công việc
+          input.form-control(
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Nhập tên công việc..."
+            required
+          )
+
+        .form-group
+          label(for="description") Nội dung công việc
+          textarea( 
+            class="form-control textarea-mce"
+            id="description"
+            name="description"
+            rows="5"
+            placeholder="Nhập nội dung công việc..."
+          )
+
+        .form-row
+          .form-group.col-md-6
+            label(for="quantityMember") Số lượng nhân viên
+            input.form-control(
+              type="number"
+              id="quantityMember"
+              name="quantityMember"
+              min="1"
+              value="1"
+            )
+
+          .form-group.col-md-6
+            label(for="status") Trạng thái
+            select.form-control(
+              id="status"
+              name="status"
+            )
+              option(value="completed") Hoàn thành
+              option(value="incomplete" selected) Chưa hoàn thành
+
+        .form-row
+          .form-group.col-md-6
+            label(for="startDate") Ngày bắt đầu
+            input.form-control(
+              type="date"
+              id="startDate"
+              name="startDate"
+            )
+
+          .form-group.col-md-6
+            label(for="endDate") Ngày kết thúc
+            input.form-control(
+              type="date"
+              id="endDate"
+              name="endDate"
+            )
+
+        .mt-4
+          button.btn.btn-success(type="submit")
+            i.fa.fa-save
+            |  Lưu
+
+          a.btn.btn-secondary.ml-2(
+            href=`${prefixAdmin}/task`
+          )
+            | Quay lại

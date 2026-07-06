@@ -1,0 +1,88 @@
+extends ../../layouts/default.pug
+
+block main
+  h2.mb-4 Chỉnh sửa công việc
+
+  .card
+    .card-header.bg-warning.text-white
+      | Cập nhật thông tin công việc
+
+    .card-body
+      form(
+        action=`${prefixAdmin}/task/edit/${task._id}?_method=PATCH`
+        method="POST"
+      )
+
+        .form-group
+          label(for="title") Tên công việc
+          input.form-control(
+            type="text"
+            id="title"
+            name="title"
+            value=task.title
+            required
+          )
+
+        .form-group
+          label(for="description") Nội dung công việc
+          textarea(
+            class="form-control textarea-mce"
+            id="description"
+            name="description"
+            rows="6"
+          )!= task.description
+
+        .form-row
+          .form-group.col-md-6
+            label(for="quantityMember") Số lượng nhân viên
+            input.form-control(
+              type="number"
+              id="quantityMember"
+              name="quantityMember"
+              min="1"
+              value=task.quantityMember
+            )
+
+          .form-group.col-md-6
+            label(for="status") Trạng thái
+            select.form-control(
+              id="status"
+              name="status"
+            )
+              option(
+                value="completed"
+                selected=task.status === "completed"
+              ) Hoàn thành
+
+              option(
+                value="incomplete"
+                selected=task.status === "incomplete"
+              ) Chưa hoàn thành
+
+        .form-row
+          .form-group.col-md-6
+            label(for="startDate") Ngày bắt đầu
+            input.form-control(
+              type="date"
+              id="startDate"
+              name="startDate"
+              value=task.startDate.toISOString().slice(0,10)
+            )
+
+          .form-group.col-md-6
+            label(for="endDate") Ngày kết thúc
+            input.form-control(
+              type="date"
+              id="endDate"
+              name="endDate"
+              value=task.endDate.toISOString().slice(0,10)
+            )
+
+        .mt-4
+          button.btn.btn-success(type="submit")
+            | Cập nhật
+
+          a.btn.btn-secondary.ml-2(
+            href=`${prefixAdmin}/task`
+          )
+            | Quay lại

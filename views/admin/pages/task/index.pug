@@ -34,7 +34,7 @@ block main
             tr
             td.text-center= index + 1
             td= task.title
-            td= task.description
+            td!= task.description
             td.text-center= task.quantityMember
 
             td.text-center
