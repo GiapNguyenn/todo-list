@@ -14,7 +14,14 @@ const app = express();
 
     //cấu hình connect
   const database = require("./config/database")
-  database.connect()
+  app.use(async (req, res, next) => {
+  try {
+    await database.connect();
+    next();
+  } catch (error) {
+    res.status(500).send("Không thể kết nối database");
+  }
+});
 
   app.set('views', `${__dirname}/views`);
   app.set("view engine", "pug");
