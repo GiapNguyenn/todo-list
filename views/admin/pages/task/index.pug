@@ -1,22 +1,67 @@
 extends ../../layouts/default
 
 block main
-  .d-flex.justify-content-between.align-items-center.mb-4
-    h2.mb-0 Danh sách Task
+  .container-fluid
 
-    a.btn.btn-primary(href="/admin/tasks/create")
-      | Thêm Task
+    .d-flex.justify-content-between.align-items-center.mb-4
+      h2.mb-0 Quản lý Task
 
-  table.table.table-bordered.table-hover
-    thead.thead-dark
-      tr
-        th #
-        th Tên
-        th Trạng thái
+      a.btn.btn-primary(href="/admin/tasks/create")
+        i.bi.bi-plus-circle.me-1
+        | Thêm Task
 
-    tbody
-      tr
-        td 1
-        td Làm giao diện
-        td
-          span.badge.badge-success Hoàn thành
+    table.table.table-bordered.table-hover.align-middle
+      thead.table-dark
+        tr.text-center
+          th(width="60") STT
+          th Tên công việc
+          th Nội dung
+          th(width="140") Số nhân viên
+          th(width="150") Trạng thái
+          th(width="140") Ngày bắt đầu
+          th(width="140") Ngày kết thúc
+          th(width="220") Hành động
+
+      tbody
+        each task, index in tasks
+          tr
+            td.text-center= index + 1
+
+            td= task.title
+
+            td= task.description
+
+            td.text-center= task.quantityMember
+
+            td.text-center
+              if task.status
+                span.badge.bg-success Hoàn thành
+              else
+                span.badge.bg-secondary Chưa hoàn thành
+
+            td.text-center= task.startDate.toLocaleDateString("vi-VN")
+            td.text-center= task.endDate.toLocaleDateString("vi-VN")
+
+            td.text-center
+              a.btn.btn-info.btn-sm.me-1(
+                href=`/admin/tasks/detail/${task._id}`
+              )
+                i.bi.bi-eye
+                |  Chi tiết
+
+              a.btn.btn-warning.btn-sm.me-1(
+                href=`/admin/tasks/edit/${task._id}`
+              )
+                i.bi.bi-pencil-square
+                |  Sửa
+
+              a.btn.btn-danger.btn-sm(
+                href=`/admin/tasks/delete/${task._id}`
+              )
+                i.bi.bi-trash
+                |  Xóa
+
+        if tasks.length === 0
+          tr
+            td.text-center(colspan="8")
+              | Chưa có công việc nào.
