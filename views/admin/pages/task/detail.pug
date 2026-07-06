@@ -1,0 +1,63 @@
+extends ../../layouts/default.pug
+
+block main
+  h2.mb-4 Chi tiết công việc
+
+  .card
+    .card-header.bg-info.text-white
+      h5.mb-0 Thông tin công việc
+
+    .card-body
+
+    .row.mb-3
+        .col-md-3.font-weight-bold Mã công việc
+        .col-md-9= task._id
+
+    .row.mb-3
+        .col-md-3.font-weight-bold Tên công việc
+        .col-md-9= task.title
+
+    if task.description
+        .row.mb-3
+        .col-md-3.font-weight-bold Nội dung
+        .col-md-9!= task.description
+
+    .row.mb-3
+        .col-md-3.font-weight-bold Số lượng nhân viên
+        .col-md-9= task.quantityMember
+
+    .row.mb-3
+        .col-md-3.font-weight-bold Trạng thái
+        .col-md-9
+            if task.status === "completed"
+                span.badge.badge-success Hoàn thành
+            else
+                span.badge.badge-secondary Chưa hoàn thành
+
+    if task.startDate
+        .row.mb-3
+        .col-md-3.font-weight-bold Ngày bắt đầu
+        .col-md-9= task.startDate.toLocaleDateString("vi-VN")
+
+    if task.endDate
+        .row.mb-3
+        .col-md-3.font-weight-bold Ngày kết thúc
+        .col-md-9= task.endDate.toLocaleDateString("vi-VN")
+
+    if task.createdAt
+        .row.mb-3
+        .col-md-3.font-weight-bold Ngày tạo
+        .col-md-9= task.createdAt.toLocaleString("vi-VN")
+
+    if task.updatedAt
+        .row.mb-3
+        .col-md-3.font-weight-bold Cập nhật lần cuối
+        .col-md-9= task.updatedAt.toLocaleString("vi-VN")
+
+    hr
+
+    a.btn.btn-warning.mr-2(href=`${prefixAdmin}/task/edit/${task._id}`)
+        | Chỉnh sửa
+
+    a.btn.btn-secondary(href=`${prefixAdmin}/task`)
+        | Quay lại

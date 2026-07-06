@@ -78,7 +78,11 @@ module.exports.createPost = async (req, res) => {
 module.exports.edit = async (req, res) => {
   try {
       const id = req.params.id;
-      const task = await Task.findById(id);
+      find = {
+        _id: id,
+        deleted: false
+      };
+      const task = await Task.findOne(find);
       res.render("./admin/pages/task/edit.pug", {
         pageTitle: "Chỉnh sửa công việc",
         task: task
@@ -98,5 +102,36 @@ module.exports.update = async (req, res) => {
   } catch (error) {
     req.flash('error', 'Cập nhật công việc thất bại');
     res.redirect(`/admin/task/edit/${req.params.id}`);
+  }
+}
+
+// [DELETE] /admin/task/delete/:id
+module.exports.delete = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Task.updateOne({ _id: id }, { deleted: true });
+    req.flash('success', 'Xóa công việc thành công');
+    res.redirect("/admin/task");
+  } catch (error) {
+    req.flash('error', 'Xóa công việc thất bại');
+    res.redirect("/admin/task");
+  }
+}
+// [detail] /admin/task/detail/:id
+module.exports.detail = async (req, res) => {
+  try {
+    const id = req.params.id;
+    find = {
+      _id: id,
+      deleted: false
+    };
+    const task = await Task.findOne(find);
+    res.render("./admin/pages/task/detail.pug", {
+      pageTitle: "Chi tiết công việc",
+      task: task
+    });
+  } catch (error) {
+    req.flash('error', 'Không tìm thấy công việc');
+    res.redirect("/admin/task");
   }
 }
