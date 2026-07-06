@@ -29,9 +29,6 @@ app.set("views", "./views");
   app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
   //end tinyMCE
 
-  app.use(express.static(path.join(__dirname, "public")));
-
-
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
 
