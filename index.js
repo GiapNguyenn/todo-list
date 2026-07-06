@@ -38,6 +38,8 @@ app.set("views", "./views");
   // App local Variables 
   const systemConfig=require("./config/systems")
   app.locals.prefixAdmin =systemConfig.perfixAdmin
+
+  app.use(express.static(`${__dirname}/public`))
   
     // Routers 
   route(app);
