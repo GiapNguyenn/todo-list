@@ -6,22 +6,22 @@ module.exports = (query) => {
       class:""
     },
     {
-      name: "Hoạt động",
-      status:"active",
+      name: "Hoàn thành",
+      status:"completed",
       class:""
     },
     {
-      name: "Dừng hoạt động",
-      status:"inactive",
+      name: "Chưa hoàn thành",
+      status:"incomplete",
       class:""
     }
   ]
   if (query.status){
     const index =filterStatus.findIndex(item => item.status == query.status)
-    filterStatus[index].class ="active"
+    filterStatus[index].class ="completed"
   }else {
     const index =filterStatus.findIndex(item => item.status == "")
-    filterStatus[index].class ="active"
+    filterStatus[index].class ="completed"
   }
   return filterStatus
 }

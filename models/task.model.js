@@ -17,8 +17,9 @@ const taskSchema = new mongoose.Schema({
     },
 
         status: {
-        type: Boolean,
-        default: false
+        type: String,
+        enum: ["completed", "incomplete"],
+        default: "incomplete"
     },
     deleted : {
       type : Boolean ,

@@ -1,67 +1,50 @@
 extends ../../layouts/default
+include ../../mixins/filter-status
+include ../../mixins/search
 
 block main
-  .container-fluid
 
-    .d-flex.justify-content-between.align-items-center.mb-4
-      h2.mb-0 Quản lý Task
+  h2.mb-4= pageTitle
 
-      a.btn.btn-primary(href="/admin/tasks/create")
-        i.bi.bi-plus-circle.me-1
-        | Thêm Task
+  .row.mb-3.align-items-center
+    .col-md-6
+        +search(keyword)
+    .col-md-6.text-right
+      a.btn.btn-primary(href="/admin/task/create") Thêm Task
 
-    table.table.table-bordered.table-hover.align-middle
-      thead.table-dark
-        tr.text-center
-          th(width="60") STT
-          th Tên công việc
-          th Nội dung
-          th(width="140") Số nhân viên
-          th(width="150") Trạng thái
-          th(width="140") Ngày bắt đầu
-          th(width="140") Ngày kết thúc
-          th(width="220") Hành động
+  .mb-3
+    +filter-status(filterStatus)
 
-      tbody
-        each task, index in tasks
-          tr
-            td.text-center= index + 1
+  table.table.table-bordered.table-hover
+    thead.table-dark
+      tr
+        th STT
+        th Tên công việc
+        th Nội dung
+        th Số NV
+        th Trạng thái
+        th Ngày bắt đầu
+        th Ngày kết thúc
+        th Hành động
 
-            td= task.title
+    tbody
+      each task, index in tasks
+        tr
+          td= index + 1
+          td= task.title
+          td= task.description
+          td.text-center= task.quantityMember
 
-            td= task.description
+          td.text-center
+            if task.status === "completed"
+                span.badge.badge-success Hoàn thành
+            else
+                span.badge.badge-secondary Chưa hoàn thành
 
-            td.text-center= task.quantityMember
+          td= task.startDate.toLocaleDateString("vi-VN")
+          td= task.endDate.toLocaleDateString("vi-VN")
 
-            td.text-center
-              if task.status
-                span.badge.bg-success Hoàn thành
-              else
-                span.badge.bg-secondary Chưa hoàn thành
-
-            td.text-center= task.startDate.toLocaleDateString("vi-VN")
-            td.text-center= task.endDate.toLocaleDateString("vi-VN")
-
-            td.text-center
-              a.btn.btn-info.btn-sm.me-1(
-                href=`/admin/tasks/detail/${task._id}`
-              )
-                i.bi.bi-eye
-                |  Chi tiết
-
-              a.btn.btn-warning.btn-sm.me-1(
-                href=`/admin/tasks/edit/${task._id}`
-              )
-                i.bi.bi-pencil-square
-                |  Sửa
-
-              a.btn.btn-danger.btn-sm(
-                href=`/admin/tasks/delete/${task._id}`
-              )
-                i.bi.bi-trash
-                |  Xóa
-
-        if tasks.length === 0
-          tr
-            td.text-center(colspan="8")
-              | Chưa có công việc nào.
+          td
+            a.btn.btn-info.btn-sm.me-1(href=`/admin/task/detail/${task._id}`) Chi tiết
+            a.btn.btn-warning.btn-sm.me-1(href=`/admin/task/edit/${task._id}`) Sửa
+            a.btn.btn-danger.btn-sm(href=`/admin/task/delete/${task._id}`) Xóa
