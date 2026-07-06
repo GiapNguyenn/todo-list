@@ -16,7 +16,7 @@ const app = express();
   const database = require("./config/database")
   database.connect()
 
-app.set("view engine", "pug");
+app.set('views', `${__dirname}/views`);
 app.set("views", "./views");
 
   // flash 
