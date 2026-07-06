@@ -41,3 +41,14 @@ if (formSearch) {
   })
 }
 // End Form Search 
+// Pagination
+let url = new URL(window.location.href);
+const buttonPagination = document.querySelectorAll("[button-pagination]")
+buttonPagination.forEach(button => {
+  button.addEventListener("click", () => {
+    const page = button.getAttribute("button-pagination")
+    url.searchParams.set("page", page)
+    window.location.href = url.href
+  })
+})
+//end Pagination

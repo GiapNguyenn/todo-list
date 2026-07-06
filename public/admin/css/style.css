@@ -26,3 +26,11 @@ main{
 }
 
 /*end  css của trang chung admin  */
+
+/* responsive  */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}
+/* end responsive  */

@@ -1,6 +1,7 @@
 extends ../../layouts/default
 include ../../mixins/filter-status
 include ../../mixins/search
+include ../../mixins/pagination
 
 block main
 
@@ -15,36 +16,61 @@ block main
   .mb-3
     +filter-status(filterStatus)
 
-  table.table.table-bordered.table-hover
-    thead.table-dark
-      tr
-        th STT
-        th Tên công việc
-        th Nội dung
-        th Số NV
-        th Trạng thái
-        th Ngày bắt đầu
-        th Ngày kết thúc
-        th Hành động
+  .table-responsive
+    table.table.table-bordered.table-hover
+        thead.bg-dark.text-white
+            tr
+                th STT
+                th Tên công việc
+                th Nội dung
+                th Số NV
+                th Trạng thái
+                th Ngày bắt đầu
+                th Ngày kết thúc
+                th Hành động
 
-    tbody
-      each task, index in tasks
-        tr
-          td= index + 1
-          td= task.title
-          td= task.description
-          td.text-center= task.quantityMember
+        tbody
+        each task, index in tasks
+            tr
+            td.text-center= index + 1
+            td= task.title
+            td= task.description
+            td.text-center= task.quantityMember
 
-          td.text-center
-            if task.status === "completed"
-                span.badge.badge-success Hoàn thành
-            else
-                span.badge.badge-secondary Chưa hoàn thành
+            td.text-center
+                if task.status == "completed"
+                    a(
+                    href="javascript:;"
+                    data-status=task.status
+                    data-id=task._id
+                    button-change-status
+                    class="badge badge-primary"
+                    ) Hoàn thành
+                else
+                    a(
+                    href="javascript:;"
+                    data-status=task.status
+                    data-id=task._id
+                    button-change-status
+                    class="badge badge-secondary"
+                    ) Chưa hoàn thành
 
-          td= task.startDate.toLocaleDateString("vi-VN")
-          td= task.endDate.toLocaleDateString("vi-VN")
+            td.text-center= task.startDate.toLocaleDateString("vi-VN")
+            td.text-center= task.endDate.toLocaleDateString("vi-VN")
 
-          td
-            a.btn.btn-info.btn-sm.me-1(href=`/admin/task/detail/${task._id}`) Chi tiết
-            a.btn.btn-warning.btn-sm.me-1(href=`/admin/task/edit/${task._id}`) Sửa
-            a.btn.btn-danger.btn-sm(href=`/admin/task/delete/${task._id}`) Xóa
+            td.text-center
+                a.btn.btn-info.btn-sm.mr-1(href=`/admin/task/detail/${task._id}`) Chi tiết
+                a.btn.btn-warning.btn-sm.mr-1(href=`/admin/task/edit/${task._id}`) Sửa
+                a.btn.btn-danger.btn-sm(href=`/admin/task/delete/${task._id}`) Xóa
+
+    .card.mt-3
+        .card-body.d-flex.justify-content-center
+            +pagination(pagination)
+    form(
+        action="",
+        method="POST"
+        id="form-change-status"
+        data-path=`${prefixAdmin}/task/change-status`
+        ) 
+
+        script(src="/admin/js/task.js")
